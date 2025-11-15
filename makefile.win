@@ -1,0 +1,37 @@
+# Project: MovingAverage
+# Makefile created by Red Panda C++ 3.2.2958
+
+CXX      = "aarch64-w64-mingw32-clang++.exe"
+CC       = "aarch64-w64-mingw32-clang.exe"
+WINDRES  = "aarch64-w64-mingw32-windres.exe"
+RM       = del /q /f
+CD       = cd /d
+LIBS     = "-Wl,utf8init.o" "-Wl,utf8manifest.o" "-LC:/Program Files/Matplot++1.2.0/lib"
+INCS     = 
+CXXINCS  = 
+CXXFLAGS = $(CXXINCS) "-pedantic" "-g3" "-pipe" "-Wall" "-Wextra" "-IC:/Program Files/Matplot++1.2.0/include/" "-D_DEBUG"
+CFLAGS   = $(INCS) "-pedantic" "-g3" "-pipe" "-Wall" "-Wextra" "-D_DEBUG"
+WINDRESFLAGS = 
+RES      = MovingAverage_private.res
+OBJ      = main.o $(RES)
+BIN      = MovingAverage.exe
+LINKOBJ  = "main.o" "MovingAverage_private.res"
+CLEANOBJ = "main.o" "MovingAverage_private.res" "MovingAverage.exe"
+
+.PHONY: all all-before all-after clean clean-custom
+
+all: all-before $(BIN) all-after
+
+clean: clean-custom
+	-$(RM) $(CLEANOBJ) >NUL 2>&1
+
+MovingAverage.exe: $(OBJ)
+
+	$(CXX) $(LINKOBJ) -o "MovingAverage.exe" $(LIBS)
+
+main.o: main.cpp
+	$(CXX) -c "main.cpp" -o "main.o" $(CXXFLAGS) 
+
+MovingAverage_private.res: MovingAverage_private.rc 
+	$(WINDRES) -i "MovingAverage_private.rc" --input-format=rc -o "MovingAverage_private.res" -O coff $(WINDRESFLAGS) 
+
